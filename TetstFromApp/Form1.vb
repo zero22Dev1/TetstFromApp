@@ -67,17 +67,24 @@
     End Sub
 
     Private Sub OKButton_Click(sender As Object, e As EventArgs) Handles OKButton.Click
+
         If MessageBox.Show("続けますか？", "確認", MessageBoxButtons.OKCancel) = DialogResult.OK Then
             ' OKが押されたとき
         End If
         Me.Close()
     End Sub
 
-    Private Sub ReturnButton_Click(sender As Object, e As EventArgs) Handles ReturnButton.Click
+    Private Sub ReturnButton_Click(sender As Object, e As EventArgs) Handles ReturnButton.Click, Buttonss.Click
+
+
         If MessageBox.Show("続けますか？", "確認", MessageBoxButtons.YesNo) = DialogResult.Yes Then
             ' Yesが押されたとき
         End If
-        Me.Close()
+        Dim subForm As New MaiinForm()
+        MaiinForm.ShowDialog()
+
+
+        Close()
     End Sub
 
     Private Sub NoButton_Click(sender As Object, e As EventArgs) Handles NoButton.Click

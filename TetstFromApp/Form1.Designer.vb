@@ -27,6 +27,7 @@ Partial Class Form1
         NoButton = New Button()
         Label1 = New Label()
         TitleLable = New Label()
+        Buttonss = New Button()
         SuspendLayout()
         ' 
         ' ReturnButton
@@ -76,6 +77,16 @@ Partial Class Form1
         TitleLable.TabIndex = 3
         TitleLable.Text = "Label2"
         ' 
+        ' Buttonss
+        ' 
+        Buttonss.Font = New Font("Yu Gothic UI", 22.0F, FontStyle.Bold)
+        Buttonss.Location = New Point(494, 406)
+        Buttonss.Name = "Buttonss"
+        Buttonss.Size = New Size(284, 117)
+        Buttonss.TabIndex = 1
+        Buttonss.Text = "戻る"
+        Buttonss.UseVisualStyleBackColor = True
+        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(10.0F, 25.0F)
@@ -85,6 +96,7 @@ Partial Class Form1
         Controls.Add(Label1)
         Controls.Add(OKButton)
         Controls.Add(NoButton)
+        Controls.Add(Buttonss)
         Controls.Add(ReturnButton)
         Name = "Form1"
         Text = "Form1"
@@ -95,5 +107,6 @@ Partial Class Form1
     Friend WithEvents NoButton As Button
     Friend WithEvents Label1 As Label
     Friend WithEvents TitleLable As Label
+    Friend WithEvents Buttonss As Button
 
 End Class
