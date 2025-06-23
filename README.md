@@ -1,34 +1,39 @@
 ```vbnet
-Private Sub C1FlexGrid1_CellChecked(sender As Object, e As RowColEventArgs) Handles C1FlexGrid1.CellChecked
-    ' チェックボックス列の列インデックス取得（例："選択"列）
-    Dim checkColIndex As Integer = -1
-    For col As Integer = C1FlexGrid1.Cols.Fixed To C1FlexGrid1.Cols.Count - 1
-        If C1FlexGrid1(0, col).ToString() = "選択" Then
-            checkColIndex = col
-            Exit For
-        End If
-    Next
+''' <summary>
+''' 指定した recno に応じて FlexGrid の行を選択します。
+''' recno = "0" の場合は先頭行、それ以外は一致する行を検索して選択。
+''' </summary>
+''' <param name="grid">対象の C1FlexGrid</param>
+''' <param name="recno">"0" または recno 値</param>
+Public Sub SelectRowByRecnoOrTop(grid As C1.Win.C1FlexGrid.C1FlexGrid, recno As String)
+    Dim dataStartRow As Integer = grid.Rows.Fixed ' 通常は 2（ヘッダー行数）
+    Dim targetRowIndex As Integer = -1
 
-    If checkColIndex = -1 Then Exit Sub
-
-    Dim row As Integer = e.Row
-    Dim isChecked As Boolean = C1FlexGrid1(row, checkColIndex)
-
-    ' スタイルを作成または取得
-    Dim checkedStyle = C1FlexGrid1.Styles("CheckedRow")
-    If checkedStyle Is Nothing Then
-        checkedStyle = C1FlexGrid1.Styles.Add("CheckedRow")
-        checkedStyle.BackColor = Color.LightGreen
-    End If
-
-    ' チェックされたら背景色を変える
-    If isChecked Then
-        C1FlexGrid1.Rows(row).Style = checkedStyle
+    If recno = "0" Then
+        ' 先頭データ行を選択
+        targetRowIndex = dataStartRow
     Else
-        ' チェックを外した場合はスタイルを戻す
-        C1FlexGrid1.Rows(row).Style = Nothing
+        ' "recno" 列のインデックス取得（列名が "recno" の場合）
+        Dim colRecnoIndex As Integer = grid.Cols("recno").Index
+
+        ' データ行をループして一致する recno を探す
+        For row As Integer = dataStartRow To grid.Rows.Count - 1
+            If grid(row, colRecnoIndex).ToString() = recno Then
+                targetRowIndex = row
+                Exit For
+            End If
+        Next
+
+        ' 見つからなければ先頭行にフォールバック
+        If targetRowIndex = -1 Then
+            targetRowIndex = dataStartRow
+        End If
     End If
+
+    ' 行全体を選択状態にする
+    grid.Select(targetRowIndex, 0, targetRowIndex, grid.Cols.Count - 1)
 End Sub
+
 ```
 
 
